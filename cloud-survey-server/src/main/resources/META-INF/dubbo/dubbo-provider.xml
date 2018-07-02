@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.springframework.org/schema/beans"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans.xsd
+	http://code.alibabatech.com/schema/dubbo
+	http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+
+    <!-- 服务名称-->
+    <dubbo:application name="dubbo-provider"/>
+
+    <!-- 广播-->
+    <!--<dubbo:registry address="multicast://224.5.6.7:1234" />-->
+
+    <!-- zookeeper -->
+    <dubbo:registry address="zookeeper://127.0.0.1:2181"/>
+
+    <!-- dubbo服务监控-->
+    <!--<dubbo:monitor protocol="registry"/>-->
+
+    <!-- 端口号-->
+    <dubbo:protocol name="dubbo" port="20880"/>
+
+    <dubbo:service interface="com.shengwu.cloud.survey.api.SurveyTestApi" ref="surveyTestApi" timeout="60000"/>
+    <bean id="surveyTestApi" class="com.shengwu.cloud.survey.service.SurveyTestApiImpl"/>
+
+    <dubbo:service interface="com.shengwu.cloud.survey.api.SurveyUserApi" ref="surveyUserApi" timeout="60000"/>
+    <bean id="surveyUserApi" class="com.shengwu.cloud.survey.service.SurveyUserApiImpl"/>
+
+    <dubbo:service interface="com.shengwu.cloud.survey.api.SurveyQuestionApi" ref="surveyQuestionApi" timeout="60000"/>
+    <bean id="surveyQuestionApi" class="com.shengwu.cloud.survey.service.SurveyQuestionApiImpl"/>
+
+</beans>

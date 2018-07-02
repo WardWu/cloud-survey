@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ehcache xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="http://ehcache.sf.net/ehcache.xsd">
+
+
+    <!-- 自动配置 -->
+    <cacheManagerPeerProviderFactory
+            class="net.sf.ehcache.distribution.RMICacheManagerPeerProviderFactory"
+            properties="peerDiscovery=automatic, multicastGroupAddress=230.0.0.1,
+          multicastGroupPort=4446, timeToLive=225"/>
+
+    <!-- 手动配置 -->
+    <!--<cacheManagerPeerProviderFactory class="net.sf.ehcache.distribution.RMICacheManagerPeerProviderFactory"
+                                     properties="peerDiscovery=manual,rmiUrls=//10.5.11.18:40009/resourceCache" />-->
+
+
+    <!--端口监听-->
+    <cacheManagerPeerListenerFactory
+            class="net.sf.ehcache.distribution.RMICacheManagerPeerListenerFactory"
+            properties="hostName=localhost, port=40009,
+            socketTimeoutMillis=2000"/>
+    <!-- 配置cache-->
+    <cache name="resourceCache"
+           maxEntriesLocalHeap="10000"
+           eternal="false"
+           timeToIdleSeconds="3600"
+           timeToLiveSeconds="3600"
+           overflowToDisk="false">
+        <cacheEventListenerFactory class="net.sf.ehcache.distribution.RMICacheReplicatorFactory"
+                                   properties="replicateAsynchronously=true,
+                replicatePuts=true,
+                replicateUpdates=true,
+                replicateUpdatesViaCopy=false,
+                replicateRemovals=true "/>
+    </cache>
+</ehcache>
